@@ -5,5 +5,5 @@ import mario.hany.currency.domain.repo.ICurrencyRepo
 import org.koin.dsl.module
 
 val repositoriesModule = module {
-    single<ICurrencyRepo> { CurrencyRepo(get()) }
+    single<ICurrencyRepo> { CurrencyRepo(get(), get()) }
 }
