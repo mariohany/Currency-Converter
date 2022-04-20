@@ -1,11 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.converter.CurrencyConverterFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingBottom="32dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="32dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/from"
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/fromSpinner"
+            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/to"
+            android:textColor="@color/default_text_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/toSpinner"
+            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+        <mario.hany.currency.ui.views.RoundedSpinner
+            android:id="@+id/fromSpinner"
+            android:layout_width="wrap_content"
+            android:minWidth="100dp"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:entries="@array/currency_codes"
+            app:layout_constraintEnd_toStartOf="@+id/swapBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <mario.hany.currency.ui.views.CurrencyEditText
+            android:id="@+id/fromEt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/from"
+            android:text="@string/initial_value"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="@+id/fromSpinner"
+            app:layout_constraintStart_toStartOf="@+id/fromSpinner"
+            app:layout_constraintTop_toBottomOf="@+id/fromSpinner" />
+
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/fromEt"
+            app:layout_constraintEnd_toStartOf="@+id/toEt"
+            app:layout_constraintStart_toEndOf="@+id/fromEt"
+            app:layout_constraintTop_toTopOf="@+id/toEt" />
+
+
+        <mario.hany.currency.ui.views.CurrencyEditText
+            android:id="@+id/toEt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/to"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="@+id/toSpinner"
+            app:layout_constraintStart_toStartOf="@+id/toSpinner"
+            app:layout_constraintTop_toBottomOf="@+id/toSpinner" />
+
+        <mario.hany.currency.ui.views.RoundedSpinner
+            android:id="@+id/toSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:minHeight="40dp"
+            android:entries="@array/currency_codes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/swapBtn"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/swapBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/main_blue"
+            android:src="@drawable/ic_swap"
+            app:layout_constraintBottom_toBottomOf="@+id/fromSpinner"
+            app:layout_constraintEnd_toStartOf="@+id/toSpinner"
+            app:layout_constraintStart_toEndOf="@+id/fromSpinner"
+            app:layout_constraintTop_toTopOf="@+id/toSpinner" />
+
+        <Button
+            android:id="@+id/detailsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/main_blue"
+            android:text="@string/details"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fromEt" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

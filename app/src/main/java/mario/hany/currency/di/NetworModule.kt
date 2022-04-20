@@ -1,5 +1,6 @@
 package mario.hany.currency.di
 
+import mario.hany.currency.BuildConfig
 import mario.hany.currency.data.remote.AuthInterceptor
 import mario.hany.currency.data.remote.CurrencyApi
 import okhttp3.OkHttpClient
