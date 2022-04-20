@@ -9,11 +9,14 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import mario.hany.currency.R
 import mario.hany.currency.databinding.CurrencyConverterFragmentBinding
+import mario.hany.currency.ui.base.BaseFragment
+import mario.hany.currency.ui.details.DetailsFragment.Companion.BASE_CURRENCY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CurrencyConverterFragment : Fragment() {
+class CurrencyConverterFragment : BaseFragment() {
 
     private val viewModel: ConvertViewModel by viewModel()
     private var _binding: CurrencyConverterFragmentBinding? = null
@@ -27,6 +30,10 @@ class CurrencyConverterFragment : Fragment() {
     ): View {
         _binding = CurrencyConverterFragmentBinding.inflate(layoutInflater)
         return binding.root
+    }
+
+    override var functionsToBeLoaded: () -> Unit = {
+        viewModel.getRates()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,8 +69,8 @@ class CurrencyConverterFragment : Fragment() {
                     p2: Int,
                     p3: Long
                 ) {
-                    val amount = fromEt.text?.toString()?.replace(",","")?.toDoubleOrNull() ?:0
-                    calculateRate(amount as Double, true)
+                    val amount:Double = fromEt.text?.toString()?.replace(",","")?.toDoubleOrNull() ?:0.0
+                    calculateRate(amount, true)
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -76,15 +83,18 @@ class CurrencyConverterFragment : Fragment() {
                     p2: Int,
                     p3: Long
                 ) {
-                    val amount = fromEt.text?.toString()?.replace(",","")?.toDoubleOrNull() ?:0
-                    calculateRate(amount as Double, true)
+                    val amount:Double = fromEt.text?.toString()?.replace(",","")?.toDoubleOrNull() ?:0.0
+                    calculateRate(amount, true)
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
 
             detailsBtn.setOnClickListener {
-
+                Bundle().also {
+                    it.putString(BASE_CURRENCY, fromSpinner.selectedItem as String)
+                    findNavController().navigate(R.id.convert_to_details, it)
+                }
             }
 
             fromEt.setOnFocusChangeListener { _, b ->

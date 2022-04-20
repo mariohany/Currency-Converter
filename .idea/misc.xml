@@ -4,10 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/edit_text_bg.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_arrow.xml" value="0.217" />
         <entry key="app/src/main/res/drawable/ic_spinner_arrow.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_swap.xml" value="0.217" />
         <entry key="app/src/main/res/drawable/new_spinner_shape_error.xml" value="0.1805" />
+        <entry key="app/src/main/res/layout/convert_item.xml" value="0.2945945945945946" />
         <entry key="app/src/main/res/layout/currency_converter_fragment.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/details_fragment.xml" value="0.2945945945945946" />
+        <entry key="app/src/main/res/layout/history_section_item.xml" value="0.2945945945945946" />
         <entry key="app/src/main/res/layout/main_activity.xml" value="0.340625" />
         <entry key="app/src/main/res/layout/main_fragment.xml" value="0.340625" />
       </map>

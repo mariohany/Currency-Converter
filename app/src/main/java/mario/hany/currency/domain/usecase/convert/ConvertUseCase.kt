@@ -1,8 +1,11 @@
 package mario.hany.currency.domain.usecase.convert
 
+import mario.hany.currency.data.local.RateHistoryEntity
 import mario.hany.currency.data.models.Rates
 import mario.hany.currency.domain.repo.ICurrencyRepo
+import mario.hany.currency.domain.utils.getCurrentDate
 import mario.hany.currency.ui.converter.ConvertViewState
+import mario.hany.currency.ui.details.HistoryViewState
 import kotlin.math.max
 import kotlin.math.min
 
@@ -22,23 +25,46 @@ class ConvertUseCase(private val repo: ICurrencyRepo) {
             ConvertViewState.Error(e.localizedMessage ?: "Un Expected Error")
         }
     }
-    operator fun invoke(from:String, to:String, amount:Double, isFromText:Boolean): ConvertViewState {
+
+    suspend operator fun invoke(from:String, to:String, amount:Double, isFromText:Boolean): ConvertViewState {
         return try {
                 val fromRate = getRateForCurrency(from)
                 val toRate = getRateForCurrency(to)
                 if(fromRate != null && toRate != null) {
                     val rate = max(fromRate, toRate).div(min(fromRate, toRate))
+
                     if (isFromText) {
                         val total = if(max(fromRate, toRate) == fromRate) amount.div(rate) else rate.times(amount)
+                        repo.insertRateHistory(RateHistoryEntity(from, to, amount, total, getCurrentDate()))
                         ConvertViewState.SuccessTo(total)
                     } else {
                         val total = if(max(fromRate, toRate) == toRate) amount.div(rate) else amount.times(rate)
+                        repo.insertRateHistory(RateHistoryEntity(from, to, total, amount, getCurrentDate()))
                         ConvertViewState.SuccessFrom(total)
                     }
                 }else
                     ConvertViewState.Error("Un Expected Error")
         }catch (e:Exception){
             ConvertViewState.Error(e.localizedMessage ?: "Un Expected Error")
+        }
+    }
+
+    fun getTop10Rates(from:String): HistoryViewState {
+        return try {
+            val fromRate = getRateForCurrency(from)
+            val currencies = mutableListOf("USD","CAD","EGP","KWD","EUR","AED","GBP","JPY","CHF","BHD")
+            val result = mutableListOf<RateHistoryEntity>()
+            currencies.forEach {
+                val toRate = getRateForCurrency(it)
+                if(fromRate != null && toRate != null) {
+                    val rate = max(fromRate, toRate).div(min(fromRate, toRate))
+                    val total = if(max(fromRate, toRate) == fromRate) 1.div(rate) else rate.times(1)
+                    result.add(RateHistoryEntity(from, it, 1.0, total, ""))
+                }
+            }
+            HistoryViewState.Suggested(result)
+        }catch (e:Exception){
+            HistoryViewState.Error(e.localizedMessage ?: "Un Expected Error")
         }
     }
 

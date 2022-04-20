@@ -12,10 +12,10 @@ class ConvertViewModel(private val convertUseCase: ConvertUseCase) : ViewModel()
     private val _viewState: MutableLiveData<ConvertViewState> by lazy { MutableLiveData() }
     val viewState: LiveData<ConvertViewState> = _viewState
 
-    fun calculateRate(from: String, to: String, amount:Double, isFromText: Boolean = false) {
+    fun calculateRate(from: String, to: String, amount:Double, isFromText: Boolean = false) = viewModelScope.launch(IO) {
         _viewState.run{
-            value = ConvertViewState.Loading
-            value = convertUseCase.invoke(from, to, amount, isFromText)
+            postValue(ConvertViewState.Loading)
+            postValue(convertUseCase.invoke(from, to, amount, isFromText))
         }
     }
 

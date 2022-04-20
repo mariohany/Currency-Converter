@@ -8,7 +8,18 @@
     <fragment
         android:id="@+id/currency_convert_fragment"
         android:name="mario.hany.currency.ui.converter.CurrencyConverterFragment"
-        tools:layout="@layout/currency_converter_fragment"/>
+        tools:layout="@layout/currency_converter_fragment">
+        <action
+            android:id="@+id/convert_to_details"
+            app:destination="@id/details_fragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
 
-
+    <fragment
+        android:id="@+id/details_fragment"
+        android:name="mario.hany.currency.ui.details.DetailsFragment"
+        tools:layout="@layout/details_fragment"/>
 </navigation>
